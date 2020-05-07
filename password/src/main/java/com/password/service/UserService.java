@@ -1,12 +1,12 @@
 package com.password.service;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.password.exception.UserNotFoundException;
 import com.password.model.UserCredentials;
 import com.password.repository.UserRespository;
 
@@ -19,28 +19,18 @@ public class UserService {
 	@Autowired
 	UserRespository userRepo;
 	
-	public ResponseEntity<UserCredentials> profile(int accountNum){
+	public UserCredentials profile(int accountNum) throws UserNotFoundException{
 		
-		if(accountNum!=0) {
-			
-			List<UserCredentials> list = new ArrayList<UserCredentials>();
-			userRepo.findById(accountNum);
-			//.get().getName();
-			//forEach(list::add);
-			
 		
-	
-			//String name = userCredentials.getName();
-			//String password = userCredentials.getPassword();
 			
-			//list.add(userCredentials.getName());
-			//list.add(userCredentials.getPassword());
-			return new ResponseEntity<UserCredentials>((UserCredentials) list,HttpStatus.OK);
+			Optional<UserCredentials> list = userRepo.findById(accountNum);
+			if(accountNum!=0) {
+			return list.get();
 		}
 		
 		else {
 		
-				return new ResponseEntity<UserCredentials>(HttpStatus.BAD_REQUEST);
+			throw new UserNotFoundException();
 		}
 		
 	}

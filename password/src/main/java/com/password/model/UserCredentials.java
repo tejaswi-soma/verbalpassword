@@ -6,8 +6,7 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 
 @Entity
